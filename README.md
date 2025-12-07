@@ -1,2 +1,657 @@
 # DVSV.github.io
 Official DeveloperSAMEVOICE site
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeveloperSAMEVOICE | Roblox Studio Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a84ff;
+            --primary-dark: #0066cc;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+            --text-primary: rgba(255, 255, 255, 0.92);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            --transition-smooth: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --neon-glow: 0 0 20px rgba(10, 132, 255, 0.7), 0 0 40px rgba(10, 132, 255, 0.4), 0 0 60px rgba(10, 132, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Фоновые элементы */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(10, 132, 255, 0.15) 0%, transparent 70%);
+            filter: blur(40px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            right: 10%;
+            animation-delay: 5s;
+            background: radial-gradient(circle at center, rgba(255, 69, 58, 0.1) 0%, transparent 70%);
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            top: 30%;
+            right: -50px;
+            animation-delay: 10s;
+            background: radial-gradient(circle at center, rgba(48, 209, 88, 0.1) 0%, transparent 70%);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            33% {
+                transform: translateY(-30px) scale(1.05);
+            }
+            66% {
+                transform: translateY(30px) scale(0.95);
+            }
+        }
+
+        /* Навигация */
+        header {
+            padding: 30px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--primary-color), #5ac8fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding: 8px 0;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Основной контент */
+        .hero {
+            padding: 80px 0 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, #a8d1ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.4s;
+        }
+
+        /* Карточки с glass-эффектом */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px var(--glass-shadow);
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Стиль для подсвеченной карточки (frame) */
+        .glass-card.highlighted {
+            box-shadow: var(--neon-glow) !important;
+            border-color: var(--primary-color) !important;
+            animation: pulse-glow 2s infinite alternate;
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(10, 132, 255, 0.7), 0 0 40px rgba(10, 132, 255, 0.4), 0 0 60px rgba(10, 132, 255, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 25px rgba(10, 132, 255, 0.9), 0 0 50px rgba(10, 132, 255, 0.6), 0 0 75px rgba(10, 132, 255, 0.3);
+            }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(10, 132, 255, 0.5);
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-info:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .contact-info i {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 132, 255, 0.15);
+            border-radius: 12px;
+        }
+
+        .email-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            font-size: 1.1rem;
+        }
+
+        .email-link:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(10, 132, 255, 0.7);
+        }
+
+        .skills-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Анимации появления */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.6s; }
+        .delay-2 { animation-delay: 0.8s; }
+        .delay-3 { animation-delay: 1.0s; }
+
+        /* Футер */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 80px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .glass-card {
+                padding: 30px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновые элементы -->
+    <div class="background-elements">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <div class="container">
+        <!-- Навигация -->
+        <header>
+            <nav class="nav-container">
+                <a href="#" class="logo">DeveloperSAMEVOICE</a>
+                <div class="nav-links">
+                    <a href="#about" class="nav-link" data-target="about">Обо мне</a>
+                    <a href="#skills" class="nav-link" data-target="skills">Навыки</a>
+                    <a href="#contact" class="nav-link" data-target="contact">Контакты</a>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Основной контент -->
+        <main>
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Разработчик в Roblox Studio</h1>
+                    <p class="hero-subtitle">Создаю увлекательные игровые миры с фокусом на пользовательский опыт и инновационные механики</p>
+                </div>
+
+                <div class="info-grid">
+                    <!-- Карточка "Обо мне" -->
+                    <div id="about" class="glass-card fade-in delay-1">
+                        <h2 class="card-title"><i class="fas fa-user"></i> Обо мне</h2>
+                        <p class="card-content">
+                            Я <span class="highlight">DeveloperSAMEVOICE</span>, разработчик из <span class="highlight">Беларуси</span>, специализирующийся на создании игр и интерактивных проектов в Roblox Studio.
+                        </p>
+                        <p class="card-content">
+                            Моя страсть — создавать уникальные игровые миры, которые захватывают внимание игроков и предоставляют им незабываемый опыт. Каждый проект — это возможность воплотить новые идеи и использовать передовые технологии платформы Roblox. Я стремлюсь к созданию не просто игр, а целых вселенных с продуманной механикой, увлекательным геймплеем и визуально приятной графикой.
+                        </p>
+                        <p class="card-content">
+                            В своей работе я уделяю особое внимание деталям, оптимизации и пользовательскому опыту, чтобы каждый игрок чувствовал себя комфортно и погружался в созданный мной мир с головой.
+                        </p>
+                    </div>
+
+                    <!-- Карточка "Навыки" -->
+                    <div id="skills" class="glass-card fade-in delay-2">
+                        <h2 class="card-title"><i class="fas fa-code"></i> Навыки & Технологии</h2>
+                        <p class="card-content">
+                            Как разработчик в Roblox Studio, я обладаю экспертизой в следующих областях:
+                        </p>
+                        <ul class="skills-list">
+                            <li class="skill-tag">Lua Scripting</li>
+                            <li class="skill-tag">3D Modeling (Blender)</li>
+                            <li class="skill-tag">Game Design</li>
+                            <li class="skill-tag">UI/UX Design</li>
+                            <li class="skill-tag">Game Mechanics</li>
+                            <li class="skill-tag">Optimization</li>
+                            <li class="skill-tag">Physics Systems</li>
+                            <li class="skill-tag">Sound Design</li>
+                        </ul>
+                        <p class="card-content" style="margin-top: 25px;">
+                            Я постоянно изучаю новые инструменты и методологии, чтобы оставаться в курсе последних тенденций в игровой разработке. Особое внимание уделяю созданию плавного и отзывчивого геймплея, который удерживает внимание игроков.
+                        </p>
+                    </div>
+
+                    <!-- Карточка "Контакты" -->
+                    <div id="contact" class="glass-card fade-in delay-3">
+                        <h2 class="card-title"><i class="fas fa-envelope"></i> Контакты</h2>
+                        <p class="card-content">
+                            Готов к сотрудничеству и новым проектам. Вы можете связаться со мной по электронной почте:
+                        </p>
+                        
+                        <div class="contact-info">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 5px;">Электронная почта</p>
+                                <a href="mailto:koliablo1999@gmail.com" class="email-link">koliablo1999@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <p class="card-content" style="margin-top: 25px;">
+                            Я открыт для обсуждения новых проектов, сотрудничества или просто интересного обмена опытом в области разработки игр. Отвечаю на письма в течение 24 часов.
+                        </p>
+                        <p class="card-content">
+                            Если у вас есть идея для проекта в Roblox Studio или вы хотите улучшить существующий — напишите мне, и мы обсудим детали сотрудничества.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Футер -->
+        <footer>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Наверх</a>
+                <a href="#about" class="footer-link" data-target="about">Обо мне</a>
+                <a href="#skills" class="footer-link" data-target="skills">Навыки</a>
+                <a href="#contact" class="footer-link" data-target="contact">Контакты</a>
+            </div>
+            <p>&copy; <span id="currentYear"></span> DeveloperSAMEVOICE. Все права защищены.</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">Разработчик в Roblox Studio | Беларусь</p>
+        </footer>
+    </div>
+
+    <script>
+        // Установка текущего года в футере
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Функция для подсветки карточки (frame)
+        function highlightCard(cardId) {
+            // Убираем подсветку у всех карточек
+            document.querySelectorAll('.glass-card').forEach(card => {
+                card.classList.remove('highlighted');
+            });
+            
+            // Добавляем подсветку выбранной карточке
+            const targetCard = document.getElementById(cardId);
+            if (targetCard) {
+                targetCard.classList.add('highlighted');
+                
+                // Автоматически убираем подсветку через 3 секунды
+                setTimeout(() => {
+                    targetCard.classList.remove('highlighted');
+                }, 3000);
+            }
+        }
+        
+        // Плавная прокрутка и подсветка для навигационных ссылок
+        document.querySelectorAll('.nav-link, .footer-link[data-target]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href') || `#${this.getAttribute('data-target')}`;
+                if (targetId === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    return;
+                }
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Подсвечиваем карточку через небольшую задержку после прокрутки
+                    setTimeout(() => {
+                        highlightCard(targetId.substring(1));
+                    }, 500);
+                }
+            });
+        });
+        
+        // Анимация карточек при прокрутке
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Наблюдаем за карточками
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.style.animationPlayState = 'paused';
+            observer.observe(card);
+        });
+        
+        // Динамическое изменение цвета при прокрутке
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // Изменение позиции фоновых элементов при прокрутке
+            document.querySelectorAll('.bg-circle').forEach((circle, index) => {
+                circle.style.transform = `translateY(${rate * (index + 1) * 0.1}px)`;
+            });
+        });
+        
+        // Автоматическая подсветка карточки при загрузке страницы с якорем
+        document.addEventListener('DOMContentLoaded', () => {
+            // Проверяем, есть ли якорь в URL
+            const hash = window.location.hash;
+            if (hash) {
+                // Ждем загрузки всех элементов
+                setTimeout(() => {
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Подсвечиваем карточку
+                        setTimeout(() => {
+                            highlightCard(hash.substring(1));
+                        }, 800);
+                    }
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
